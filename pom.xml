@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.fixprotocol.orchestra</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Parent project for FIX Orchestra</description>
@@ -66,13 +66,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<antlr.version>4.9.3</antlr.version>
 		<base.java.version>11</base.java.version>
-		<commons-cli.version>1.4</commons-cli.version>
+		<commons-cli.version>1.5.0</commons-cli.version>
 		<junit.version>5.8.1</junit.version>
-		<log4j.version>2.17.1</log4j.version>
-		<saxon.version>10.6</saxon.version>
+		<log4j.version>2.17.2</log4j.version>
+		<saxon.version>11.3</saxon.version>
 		<slf4j.version>1.7.22</slf4j.version>
-		<stringtemplate.version>4.3.1</stringtemplate.version>
-		<jackson.version>2.12.3</jackson.version>
+		<stringtemplate.version>4.3.3</stringtemplate.version>
+		<jackson.version>2.13.3</jackson.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

@@ -31,13 +31,17 @@
 		</xs:attribute>
 		<xs:attribute name="langId" type="xs:language"/>
 		<xs:attribute name="purpose" type="fixi:purpose_t"/>
-		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 	<xs:complexType name="baseInterfaceType" abstract="true">
 		<xs:sequence>
 			<xs:element name="service" type="fixi:serviceType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>An application layer protocol with orchestration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="process" type="fixi:processType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An application layer process with configuration and optionally an orchestration</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="userInterface" type="fixi:userIntefaceType" minOccurs="0" maxOccurs="unbounded"/>
@@ -48,7 +52,18 @@
 			<xs:element name="annotation" type="fixi:annotation" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:token" use="required"/>
-		<xs:anyAttribute processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="configurationType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="arg" type="fixi:identifierType" minOccurs="0"/>
+			<xs:element name="category" type="fixi:configurationCategoryType" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="configurationCategoryType">
+		<xs:sequence>
+			<xs:element name="arg" type="fixi:identifierType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:token" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="documentation" mixed="true">
 		<xs:sequence>
@@ -95,6 +110,9 @@
 		</xs:key>
 	</xs:element>
 	<xs:complexType name="interfaceType">
+		<xs:annotation>
+			<xs:documentation>A service offering with a protocol stack, and optionally session configurations</xs:documentation>
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:extension base="fixi:baseInterfaceType">
 				<xs:sequence>
@@ -124,6 +142,15 @@
 			<xs:enumeration value="broadcast"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="processType">
+		<xs:complexContent>
+			<xs:extension base="fixi:protocolType">
+				<xs:sequence>
+			</xs:sequence>
+				<xs:attribute name="executable" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:simpleType name="protocolEnum_t">
 		<xs:annotation>
 			<xs:documentation>List of FIX protocols to standardize spelling</xs:documentation>
@@ -195,8 +222,14 @@
 	<xs:complexType name="protocolType">
 		<xs:sequence>
 			<xs:element name="annotation" type="fixi:annotation" minOccurs="0"/>
+			<xs:element name="configuration" type="fixi:configurationType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="name" type="fixi:protocolName_t"/>
+		<xs:attribute name="instance" type="xs:token">
+			<xs:annotation>
+				<xs:documentation>Used to disginguish multiple instances of the same protocol</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="version" type="xs:token"/>
 		<xs:attribute name="activationTime" type="xs:dateTime">
 			<xs:annotation>
@@ -224,7 +257,6 @@
 				<xs:documentation>URI of Orchestra rules of engagement</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<xs:simpleType name="purpose_enum">
 		<xs:annotation>
@@ -305,7 +337,6 @@
 				<xs:attribute name="address" type="xs:token"/>
 				<xs:attribute name="messageCast" type="fixi:messageCast_t" default="unicast"/>
 				<xs:attribute name="use" type="fixi:transportUse_t"/>
-				<xs:anyAttribute processContents="lax"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
