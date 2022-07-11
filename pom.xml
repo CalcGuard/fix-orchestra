@@ -42,15 +42,12 @@
 		<url>http://github.com/FIXTradingCommunity/fix-orchestra/issues</url>
 	</issueManagement>
 	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+    		<repository>
+      			<id>github</id>
+      			<name>GitHub Packages</name>
+      			<url>https://maven.pkg.github.com/CalcGuard/fix-orchestra</url>
+    		</repository>
+  	</distributionManagement>
 	<modules>
 		<module>interfaces</module>
 		<module>repository2010</module>
